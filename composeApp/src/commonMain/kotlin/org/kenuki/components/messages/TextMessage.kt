@@ -15,23 +15,22 @@ import io.ktor.client.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import kotlinx.coroutines.launch
+import org.kenuki.services.HttpClientService
 
 class TextMessage(
     private val text: String,
-    private val isMine: Boolean
+    private val isMine: Boolean,
+    private val httpClient: HttpClient = HttpClientService.getClient()
 ): Message {
-    suspend fun fetchText(): String {
-        try {
-            val httpClient = HttpClient()
-            val res = httpClient.get("https://ktor.io/docs/")
-            return res.bodyAsText()
-        } catch (e: Exception) {
-            return "Error: ${e.message}"
-        }
-    }
+
+    private fun myPadding() =
+        if (isMine)
+            Modifier.padding(start = 16.dp, end = 8.dp, top = 8.dp, bottom = 8.dp)
+        else
+            Modifier.padding(start = 8.dp, end = 16.dp, top = 8.dp, bottom = 8.dp)
+
     @Composable
     override fun draw() {
-        var text by remember { mutableStateOf("Loading...") }
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = if (isMine) Arrangement.End else Arrangement.Start
@@ -39,11 +38,8 @@ class TextMessage(
             Card(
                 backgroundColor = if (isMine) Color.Blue else Color.Gray,
                 shape = RoundedCornerShape(16.dp),
-                modifier = Modifier.padding(8.dp)
+                modifier = myPadding()
             ) {
-                rememberCoroutineScope().launch {
-                    text = fetchText()
-                }
                 Text(
                     text = text,
                     color = Color.White,

@@ -27,53 +27,52 @@ import org.jetbrains.compose.resources.painterResource
 
 @Composable
 fun ChatHeader(displayName: String, profilePicture: DrawableResource = Res.drawable.profile_picture_placeholder) {
-    MaterialTheme {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(MaterialTheme.colors.surface)
-                .padding(8.dp)
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(MaterialTheme.colors.surface)
+            .padding(8.dp)
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Start,
+            modifier = Modifier.fillMaxWidth()
         ) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Start,
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                IconButton(onClick = { /* Обработка нажатия */ }) {
-                    Icon(
-                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                        contentDescription = "back"
-                    )
-                }
-
-                Image(
-                    painter = painterResource(profilePicture),
-                    contentDescription = "$displayName's profile picture",
-                    modifier = Modifier
-                        .size(40.dp)
-                        .clip(CircleShape)
+            IconButton(onClick = { /* Обработка нажатия */ }) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                    contentDescription = "back"
                 )
+            }
 
-                Spacer(modifier = Modifier.width(8.dp))
+            Image(
+                painter = painterResource(profilePicture),
+                contentDescription = "$displayName's profile picture",
+                modifier = Modifier
+                    .size(40.dp)
+                    .clip(CircleShape)
+            )
 
-                Column {
-                    Text(
-                        text = displayName,
-                        style = MaterialTheme.typography.subtitle1,
-                        fontWeight = FontWeight.Bold
-                    )
-                }
+            Spacer(modifier = Modifier.width(8.dp))
 
-                Spacer(modifier = Modifier.weight(1f))
+            Column {
+                Text(
+                    text = displayName,
+                    style = MaterialTheme.typography.subtitle1,
+                    fontWeight = FontWeight.Bold
+                )
+            }
 
-                IconButton(onClick = { /* Обработка нажатия */ }) {
-                    Icon(
-                        imageVector = Icons.Default.MoreVert,
-                        contentDescription = "options"
-                    )
-                }
+            Spacer(modifier = Modifier.weight(1f))
+
+            IconButton(onClick = { /* Обработка нажатия */ }) {
+                Icon(
+                    imageVector = Icons.Default.MoreVert,
+                    contentDescription = "options"
+                )
             }
         }
     }
+
 }
 
